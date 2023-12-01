@@ -1,11 +1,15 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+public delegate void eventClickToCard(int id);
+
 public class Deck
 {
     private List<Card> cards;
 
     private int countCardInLine;
+
+    public eventClickToCard handlerClick;
 
     public Card[] Cards
     {
@@ -19,6 +23,8 @@ public class Deck
 
     public void settings(int countCardInLine, ref List<Card> allCards)
     {
+        /* rewrite driving > 6 card in deck */
+
         for (int i = 0; i < countCardInLine; i++)
         {
             int id = Random.Range(0, allCards.Count - 1);
@@ -33,7 +39,7 @@ public class Deck
         for(int i = 0; i < cards.Count; i++)
         {
             Vector2 cardOffs = new Vector2(offs.x + (i * size.x), offs.y);
-            cards[i].setRect(new Rect(cardOffs, size));
+            cards[i].Rect = new Rect(cardOffs, size);
         }
     }
 
@@ -48,6 +54,22 @@ public class Deck
             }
 
             card.draw();
+        }
+    }
+
+    public void eventHandler()
+    {
+        if(Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            Vector2 mousePos = Input.mousePosition;
+
+            Vector2 cord = new Vector2(mousePos.x, Screen.height - mousePos.y);
+
+            for(int i = 0; i < cards.Count; i++)
+            {
+                if (cards[i].Rect.Contains(cord))
+                    handlerClick(i);
+            }
         }
     }
 }

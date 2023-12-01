@@ -18,12 +18,20 @@ public class GameManager : MonoBehaviour
     private Deck playerDeck;
     private Deck enemyDeck;
 
+    public Deck PlayerDeck
+    {
+        get { return this.playerDeck; }
+    }
+
     #region main card
 
     private int mainCardId = -1;
     private Texture[] tTypesCard;
 
     public Rect rMainCard;
+
+    public GameUI ui;
+    public GameLogic logic;
 
     #endregion
 
@@ -35,7 +43,10 @@ public class GameManager : MonoBehaviour
 
         initDeck(out playerDeck, playerOffsCard);
         initDeck(out enemyDeck, enemyOffsCard);
+
+        logic.subscribeEvent();
     }
+
     private void createInitialiteCards()
     {
         initialiteCards = new List<Card>();

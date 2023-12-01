@@ -14,16 +14,17 @@ public class Card
         get { return rect.x > 0; }
     }
 
+    public Rect Rect
+    {
+        get { return this.rect; }
+        set { this.rect = value; }
+    }
+
     public Card(int type, int numb, Texture texture)
     {
         this.type = type;
         this.numb = numb;
         this.texture = texture;
-    }
-
-    public void setRect(Rect rect)
-    {
-        this.rect = rect;
     }
 
     public void draw()
