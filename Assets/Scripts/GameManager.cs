@@ -1,6 +1,12 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+public enum gameState
+{
+    playerMove,
+    enemyMove
+}
+
 public class GameManager : MonoBehaviour
 {
     public Vector2 size;
@@ -17,6 +23,7 @@ public class GameManager : MonoBehaviour
 
     private Deck playerDeck;
     private Deck enemyDeck;
+    private Deck gamingDeck;
 
     public Deck PlayerDeck
     {
@@ -35,6 +42,15 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+    private gameState gameState;
+
+    public offsCardConf offsConf;
+
+    public gameState GameState
+    {
+        get { return this.gameState; }
+    }
+
     private void Start()
     {
         createInitialiteCards();
@@ -44,7 +60,11 @@ public class GameManager : MonoBehaviour
         initDeck(out playerDeck, playerOffsCard);
         initDeck(out enemyDeck, enemyOffsCard);
 
+        gamingDeck = new Deck();
+
         logic.subscribeEvent();
+
+        gameState = gameState.playerMove;
     }
 
     private void createInitialiteCards()
@@ -65,7 +85,7 @@ public class GameManager : MonoBehaviour
     {
         deck = new Deck();
         deck.settings(defCountCard, ref initialiteCards);
-        deck.updateRect(size, offs);
+        deck.updateRect(offsConf, size, offs);
     }
 
     private void settingMainCard()

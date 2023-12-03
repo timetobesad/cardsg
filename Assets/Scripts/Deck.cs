@@ -3,11 +3,18 @@ using System.Collections.Generic;
 
 public delegate void eventClickToCard(int id);
 
+[System.Serializable]
+public struct offsCardConf
+{
+    public int count;
+
+    public float x;
+    public float y;
+}
+
 public class Deck
 {
     private List<Card> cards;
-
-    private int countCardInLine;
 
     public eventClickToCard handlerClick;
 
@@ -34,13 +41,22 @@ public class Deck
         }
     }
 
-    public void updateRect(Vector2 size, Vector2 offs)
+    public void updateRect(offsCardConf conf, Vector2 size, Vector2 offs)
     {
         for(int i = 0; i < cards.Count; i++)
         {
-            Vector2 cardOffs = new Vector2(offs.x + (i * size.x), offs.y);
+            int xInd = i % conf.count;
+            int yInd = i / conf.count;
+
+            Vector2 cardOffs = new Vector2(offs.x + (xInd * 2) + (xInd * size.x) + (yInd > 0 ? (yInd * conf.x) : 0), offs.y + (yInd * conf.y));
             cards[i].Rect = new Rect(cardOffs, size);
         }
+    }
+
+
+    private void Update()
+    {
+
     }
 
     public void draw()

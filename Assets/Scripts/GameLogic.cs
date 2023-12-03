@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameLogic : MonoBehaviour
@@ -13,7 +11,7 @@ public class GameLogic : MonoBehaviour
 
     private void Update()
     {
-        if(manager.PlayerDeck != null)
+        if(manager.GameState == gameState.playerMove && manager.PlayerDeck.Cards.Length > 0)
             manager.PlayerDeck.eventHandler();
     }
 
