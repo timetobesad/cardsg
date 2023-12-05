@@ -7,23 +7,12 @@ public enum gameState
     enemyMove
 }
 
-[System.Serializable]
-public struct deckConfig
-{
-    public int countCard;
-
-    public Vector2 cardSize;
-    public Vector2 baseRenderOffset;
-
-    public offsCardConf offConf;
-}
-
 public class GameManager : MonoBehaviour
 {
     public GameUI ui;
     public GameLogic logic;
 
-    private Deck[] decks;
+    public Deck[] decks;
     public deckConfig[] configs;
 
     public int countTypeCards = 4;
@@ -93,8 +82,8 @@ public class GameManager : MonoBehaviour
     private void initDeck(out Deck deck, deckConfig config)
     {
         deck = new Deck();
-        deck.settings(config.countCard, ref initialiteCards);
-        deck.updateRect(config.offConf, config.cardSize, config.baseRenderOffset);
+        deck.settings(config, ref initialiteCards);
+        deck.updateRect();
     }
 
     private void settingMainCard()
