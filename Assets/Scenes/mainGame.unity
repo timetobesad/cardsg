@@ -153,6 +153,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manager: {fileID: 260658117}
+  rMainCard:
+    serializedVersion: 2
+    x: 10
+    y: 284
+    width: 200
+    height: 200
 --- !u!4 &259522563
 Transform:
   m_ObjectHideFlags: 0
@@ -197,25 +203,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78674e5a67c339b4aaaf57acf6b1275e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: {x: 150, y: 200}
-  playerOffsCard: {x: 10, y: 558}
-  enemyOffsCard: {x: 458, y: 10}
-  countTypeCards: 4
-  countCardOneType: 9
-  defCountCard: 15
-  initialiteCards: []
-  rMainCard:
-    serializedVersion: 2
-    x: 10
-    y: 284
-    width: 200
-    height: 200
   ui: {fileID: 259522562}
   logic: {fileID: 598176625}
-  offsConf:
-    count: 6
-    x: 15
-    y: 30
+  configs:
+  - countCard: 6
+    cardSize: {x: 150, y: 200}
+    baseRenderOffset: {x: 10, y: 558}
+    offConf:
+      count: 6
+      x: 15
+      y: 30
+  - countCard: 6
+    cardSize: {x: 150, y: 200}
+    baseRenderOffset: {x: 446, y: 10}
+    offConf:
+      count: 6
+      x: 15
+      y: 30
+  - countCard: 0
+    cardSize: {x: 75, y: 100}
+    baseRenderOffset: {x: -1, y: -1}
+    offConf:
+      count: 12
+      x: 10
+      y: 10
+  countTypeCards: 4
+  countCardOneType: 9
 --- !u!4 &260658118
 Transform:
   m_ObjectHideFlags: 0

@@ -7,44 +7,54 @@ public enum gameState
     enemyMove
 }
 
+[System.Serializable]
+public struct deckConfig
+{
+    public int countCard;
+
+    public Vector2 cardSize;
+    public Vector2 baseRenderOffset;
+
+    public offsCardConf offConf;
+}
+
 public class GameManager : MonoBehaviour
 {
-    public Vector2 size;
+    public GameUI ui;
+    public GameLogic logic;
 
-    public Vector2 playerOffsCard;
-    public Vector2 enemyOffsCard;
+    private Deck[] decks;
+    public deckConfig[] configs;
 
     public int countTypeCards = 4;
     public int countCardOneType = 9;
 
-    public int defCountCard = 6;
-
-    public List<Card> initialiteCards;
-
-    private Deck playerDeck;
-    private Deck enemyDeck;
-    private Deck gamingDeck;
+    private List<Card> initialiteCards;
 
     public Deck PlayerDeck
     {
-        get { return this.playerDeck; }
+        get { return this.decks[0]; }
     }
+
+    public Deck EnemyDeck
+    {
+        get { return this.decks[1]; }
+    }
+
+    public Deck GamingDeck
+    {
+        get { return this.decks[2]; }
+        set { this.decks[2] = value; }
+}
 
     #region main card
 
     private int mainCardId = -1;
     private Texture[] tTypesCard;
 
-    public Rect rMainCard;
-
-    public GameUI ui;
-    public GameLogic logic;
-
     #endregion
 
     private gameState gameState;
-
-    public offsCardConf offsConf;
 
     public gameState GameState
     {
@@ -55,14 +65,13 @@ public class GameManager : MonoBehaviour
     {
         createInitialiteCards();
 
+        decks = new Deck[configs.Length];
+
+        for (int i = 0; i < configs.Length; i++)
+            initDeck(out decks[i], configs[i]);
+
+
         settingMainCard();
-
-        initDeck(out playerDeck, playerOffsCard);
-        initDeck(out enemyDeck, enemyOffsCard);
-
-        gamingDeck = new Deck();
-
-        logic.subscribeEvent();
 
         gameState = gameState.playerMove;
     }
@@ -81,11 +90,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void initDeck(out Deck deck, Vector2 offs)
+    private void initDeck(out Deck deck, deckConfig config)
     {
         deck = new Deck();
-        deck.settings(defCountCard, ref initialiteCards);
-        deck.updateRect(offsConf, size, offs);
+        deck.settings(config.countCard, ref initialiteCards);
+        deck.updateRect(config.offConf, config.cardSize, config.baseRenderOffset);
     }
 
     private void settingMainCard()
@@ -98,17 +107,17 @@ public class GameManager : MonoBehaviour
         mainCardId = Random.Range(0, countTypeCards - 1);
     }
 
-    public void drawMainCard()
+    public void drawMainCard(Rect rect)
     {
         if (mainCardId < 0)
             return;
 
-        GUI.DrawTexture(rMainCard, tTypesCard[mainCardId]);
+        GUI.DrawTexture(rect, tTypesCard[mainCardId]);
     }
 
     public void drawDecks()
     {
-        playerDeck.draw();
-        enemyDeck.draw();
+        foreach (Deck deck in decks)
+            deck.draw();
     }
 }

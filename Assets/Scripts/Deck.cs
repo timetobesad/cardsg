@@ -1,8 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public delegate void eventClickToCard(int id);
-
 [System.Serializable]
 public struct offsCardConf
 {
@@ -16,8 +14,6 @@ public class Deck
 {
     private List<Card> cards;
 
-    public eventClickToCard handlerClick;
-
     public Card[] Cards
     {
         get { return this.cards.ToArray(); }
@@ -28,11 +24,9 @@ public class Deck
         this.cards = new List<Card>();
     }
 
-    public void settings(int countCardInLine, ref List<Card> allCards)
+    public void settings(int countCard, ref List<Card> allCards)
     {
-        /* rewrite driving > 6 card in deck */
-
-        for (int i = 0; i < countCardInLine; i++)
+        for (int i = 0; i < countCard; i++)
         {
             int id = Random.Range(0, allCards.Count - 1);
 
@@ -53,12 +47,6 @@ public class Deck
         }
     }
 
-
-    private void Update()
-    {
-
-    }
-
     public void draw()
     {
         foreach(Card card in cards)
@@ -70,22 +58,6 @@ public class Deck
             }
 
             card.draw();
-        }
-    }
-
-    public void eventHandler()
-    {
-        if(Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            Vector2 mousePos = Input.mousePosition;
-
-            Vector2 cord = new Vector2(mousePos.x, Screen.height - mousePos.y);
-
-            for(int i = 0; i < cards.Count; i++)
-            {
-                if (cards[i].Rect.Contains(cord))
-                    handlerClick(i);
-            }
         }
     }
 }

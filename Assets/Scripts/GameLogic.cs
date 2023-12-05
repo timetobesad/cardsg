@@ -4,19 +4,38 @@ public class GameLogic : MonoBehaviour
 {
     public GameManager manager;
 
-    private void eventHandlerClickToCard(int cardId)
-    {
-        Debug.Log("CLICK TO CARD: " + cardId);
-    }
-
     private void Update()
     {
-        if(manager.GameState == gameState.playerMove && manager.PlayerDeck.Cards.Length > 0)
-            manager.PlayerDeck.eventHandler();
+        switch(manager.GameState)
+        {
+            case gameState.playerMove:
+                waitingClickOnCard();
+                break;
+        }
     }
 
-    public void subscribeEvent()
+    private void waitingClickOnCard()
     {
-        manager.PlayerDeck.handlerClick += eventHandlerClickToCard;
+        if(Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            int cardId = -1;
+
+            for (int i = 0; i < manager.PlayerDeck.Cards.Length; i++)
+            {
+                Vector2 cord = new Vector2(Input.mousePosition.x, Screen.height - Input.mousePosition.y);
+
+                if (manager.PlayerDeck.Cards[i].Rect.Contains(cord)) cardId = i;
+            }
+
+            if (cardId < 0)
+                return;
+
+            cardClickEventHandler(cardId);
+        }
+    }
+
+    private void cardClickEventHandler(int id)
+    {
+        Debug.Log(id);
     }
 }

@@ -3,8 +3,8 @@ using UnityEngine;
 [System.Serializable]
 public class Card
 {
-    private int type;
-    private int numb;
+    public int type;
+    public int numb;
 
     private Rect rect;
     private Rect newRect;
