@@ -13,11 +13,6 @@ public class Card
 
     private bool isChangedRect = false;
 
-    public bool IsAvailableDraw
-    {
-        get { return true;  /*return rect.x > 0;*/ }
-    }
-
     public Rect Rect
     {
         get { return this.rect; }

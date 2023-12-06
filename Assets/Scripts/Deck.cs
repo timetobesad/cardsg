@@ -15,10 +15,10 @@ public struct deckConfig
 {
     public int countCard;
 
-    public Vector2 size;
-    public Vector2 offs;
+    public float startOffsY;
 
-    public multiLineOffs mutleOffs;
+    public Vector2 size;
+    public multiLineOffs multiOffs;
 }
 
 public class Deck
@@ -41,8 +41,8 @@ public class Deck
     {
         _config = deckConf;
 
-        for (int i = 0; i < _config.countCard; i++)
-        {
+        for (int i = 0; i < deckConf.countCard; i++)
+        { 
             int id = Random.Range(0, allCards.Count - 1);
 
             this.cards.Add(allCards[id]);
@@ -52,14 +52,17 @@ public class Deck
 
     public void updateRect()
     {
+        int maxCount = (cards.Count > _config.multiOffs.count) ? _config.multiOffs.count : cards.Count;
 
-        for(int i = 0; i < cards.Count; i++)
+        float startOffsX = (Screen.width - (_config.size.x * maxCount)) / 2;
+
+        for (int i = 0; i < cards.Count; i++)
         {
-            int xInd = i % _config.countCard;
-            int yInd = i / _config.countCard;
+            int xInd = i % _config.multiOffs.count;
+            int yInd = i / _config.multiOffs.count;
 
-            Vector2 cardOffs = new Vector2(_config.offs.x + (xInd * 2) + (xInd * _config.size.x) + (yInd > 0 ? (yInd * _config.mutleOffs.x) : 0),
-                                            _config.offs.y + (yInd * _config.mutleOffs.y));
+            Vector2 cardOffs = new Vector2(startOffsX + (xInd * 2) + (xInd * _config.size.x) + (yInd > 0 ? (yInd * _config.multiOffs.x) : 0),
+                                            _config.startOffsY + (yInd * _config.multiOffs.y));
 
             cards[i].Rect = new Rect(cardOffs, _config.size);
         }
@@ -68,15 +71,7 @@ public class Deck
     public void draw()
     {
         foreach(Card card in cards)
-        {
-            if(!card.IsAvailableDraw)
-            {
-                Debug.LogError("Error drawing deck, rect card undefined!");
-                break;
-            }
-
             card.draw();
-        }
     }
 
     public void addCard(Card card)

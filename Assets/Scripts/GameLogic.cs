@@ -36,6 +36,9 @@ public class GameLogic : MonoBehaviour
 
     private void cardClickEventHandler(int id)
     {
-        Debug.Log(id);
+        manager.GamingDeck.addCard(manager.PlayerDeck.Cards[id]);
+        manager.PlayerDeck.removeCard(id);
+
+        Debug.Log(manager.PlayerDeck.Cards.Length);
     }
 }

@@ -156,7 +156,7 @@ MonoBehaviour:
   rMainCard:
     serializedVersion: 2
     x: 10
-    y: 284
+    y: 10
     width: 200
     height: 200
 --- !u!4 &259522563
@@ -206,27 +206,27 @@ MonoBehaviour:
   ui: {fileID: 259522562}
   logic: {fileID: 598176625}
   configs:
-  - countCard: 6
+  - countCard: 8
+    startOffsY: 558
     size: {x: 150, y: 200}
-    offs: {x: 10, y: 558}
-    mutleOffs:
+    multiOffs:
       count: 6
-      x: 15
+      x: 10
       y: 30
   - countCard: 6
+    startOffsY: 10
     size: {x: 150, y: 200}
-    offs: {x: 446, y: 10}
-    mutleOffs:
+    multiOffs:
       count: 6
-      x: 15
+      x: 10
       y: 30
   - countCard: 0
-    size: {x: 75, y: 100}
-    offs: {x: 0, y: 50}
-    mutleOffs:
+    startOffsY: 320
+    size: {x: 112, y: 150}
+    multiOffs:
       count: 12
       x: 0
-      y: 50
+      y: 30
   countTypeCards: 4
   countCardOneType: 9
 --- !u!4 &260658118
